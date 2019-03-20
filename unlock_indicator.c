@@ -342,7 +342,8 @@ void redraw_screen(void) {
     xcb_change_window_attributes(conn, win, XCB_CW_BACK_PIXMAP, (uint32_t[1]){bg_pixmap});
     /* XXX: Possible optimization: Only update the area in the middle of the
      * screen instead of the whole screen. */
-    xcb_clear_area(conn, 0, win, 0, 0, last_resolution[0], last_resolution[1]);
+    int size = BUTTON_DIAMETER + ring_width;
+    xcb_clear_area(conn, 0, win, 0, (last_resolution[1] - size) / 2.0, last_resolution[0], last_resolution[1]);
     xcb_free_pixmap(conn, bg_pixmap);
     xcb_flush(conn);
 }
